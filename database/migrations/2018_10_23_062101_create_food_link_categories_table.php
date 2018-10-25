@@ -1,0 +1,44 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateFoodLinkCategoriesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('food_link_categories', function (Blueprint $table) {
+            $table->increments('id');
+
+            $table->unsignedInteger('food_id');
+            $table->foreign('food_id')
+                ->references('id')
+                ->on('foods')
+                ->onDelete('cascade');
+
+            $table->unsignedInteger('food_category_id');
+            $table->foreign('food_category_id')
+                ->references('id')
+                ->on('restaurant_categories')
+                ->onDelete('cascade');
+
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('food_link_categories');
+    }
+}
